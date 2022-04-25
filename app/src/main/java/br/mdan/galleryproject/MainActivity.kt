@@ -2,6 +2,8 @@ package br.mdan.galleryproject
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +50,19 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this,"Permissão Negada!", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun pickImageFromGalery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            ivImage.setImageURI(data?.data)
         }
     }
 
